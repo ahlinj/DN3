@@ -3,6 +3,10 @@
 #include <time.h>       //time()
 #include <string.h>     //strlen()
 
+
+void printGuessedLetters(char allLettersGuessed[], char letterEntered);
+void drawHangman(int lives);
+
 int main(){
     //array of guessable words (random generated animals)
     char words[][20] = {
@@ -37,8 +41,17 @@ int main(){
         guessedLetters[i] = 0;
     }
     
+    //setting all values of this array to .
+    char allLettersGuessed[25];
+    for (int i = 0; i < 25; i++){
+            allLettersGuessed[i] = '.';
+        } 
+
     //game ends when there are the same amount of correct letters guessed and the ampount of letters in a word that you are guessing
     while (wordLength != correctGuessCounter){
+
+        //before each round we will draw (part of) a hangman
+        drawHangman(lives);
 
         //displaying (un)guessed letters
         for (int i = 0; i < wordLength; i++){
@@ -61,6 +74,9 @@ int main(){
         char letterEntered;
         letterEntered = playersGuess[0];
         printf("You guessed: %c\n", letterEntered);
+        
+        //prints already guessed letters
+        printGuessedLetters(allLettersGuessed, letterEntered);
     
         //saving the counter value 
         oldCorrectGuessCounter = correctGuessCounter;
@@ -91,8 +107,52 @@ int main(){
 
     //endgame message
     if (lives == 0){
+        printf("    ___________\n    | /        |\n    |/         |\n    |          O\n    |         /|\\\n    |         / \\\n    |\n    |\n   / \\\n  /   \\\n /     \\\n-------------------------\n");
         printf("You have run out of lives, word was: %s\n", words[seed]);
         }else{
             printf("You win, you correctly guessed: %s\n", words[seed]);
         }
+}
+
+
+void printGuessedLetters(char allLettersGuessed[], char letterEntered){
+    int tmpCount = 0;
+        for (int i = 0; i < 25; i++){
+            if (letterEntered == allLettersGuessed[i]){
+                break;
+            }else if (allLettersGuessed[i] == '.' && tmpCount == 0){
+                allLettersGuessed[i] = letterEntered;
+                tmpCount++;
+            } 
+        }
+
+    printf("Already guessed letters: ");
+        for (int i = 0; i < 25; i++){
+            if (allLettersGuessed[i] != '.'){
+                printf("%c, ", allLettersGuessed[i]);
+            }   
+        }
+        printf("\n");
+}
+
+void drawHangman(int lives){
+    if (lives == 8){
+        printf("-------------------------\n");
+    }else if (lives == 7){
+        printf("   / \\\n  /   \\\n /     \\\n-------------------------\n");
+
+    }else if (lives == 6)
+    {
+        printf("    ___________\n    | /        |\n    |/         |\n    |\n    |\n    |\n    |\n    |\n   / \\\n  /   \\\n /     \\\n-------------------------\n");
+    }else if (lives == 5){
+        printf("    ___________\n    | /        |\n    |/         |\n    |          O\n    |\n    |\n    |\n    |\n   / \\\n  /   \\\n /     \\\n-------------------------\n");
+    }else if (lives ==4){
+        printf("    ___________\n    | /        |\n    |/         |\n    |          O\n    |          |\n    |\n    |\n    |\n   / \\\n  /   \\\n /     \\\n-------------------------\n");
+    }else if (lives == 3){
+        printf("    ___________\n    | /        |\n    |/         |\n    |          O\n    |         /|\n    |\n    |\n    |\n   / \\\n  /   \\\n /     \\\n-------------------------\n");
+    }else if (lives == 2){
+        printf("    ___________\n    | /        |\n    |/         |\n    |          O\n    |         /|\\\n    |\n    |\n    |\n   / \\\n  /   \\\n /     \\\n-------------------------\n");
+    }else if (lives == 1){
+        printf("    ___________\n    | /        |\n    |/         |\n    |          O\n    |         /|\\\n    |         /\n    |\n    |\n   / \\\n  /   \\\n /     \\\n-------------------------\n");
+    }
 }
