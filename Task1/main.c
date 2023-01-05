@@ -34,7 +34,7 @@ int main(){
 
 void goUp(int whereToGo, int currentElevatorPos){
     for (currentElevatorPos; currentElevatorPos <= whereToGo; currentElevatorPos++){
-        printf("Do you want to exit?\n");
+        printf("Do you want to exit? Type 1 if yes and 0 if no.\n");
         int yesNo;
         scanf("%i", &yesNo);
         if (yesNo == 0 || yesNo == 1){
@@ -56,7 +56,7 @@ void goUp(int whereToGo, int currentElevatorPos){
 
 void goDown(int whereToGo, int currentElevatorPos){
     for (currentElevatorPos; currentElevatorPos >= whereToGo; currentElevatorPos--){
-        printf("Do you want to exit?\n");
+        printf("Do you want to exit? Type 1 if yes and 0 if no.\n");
         int yesNo;
         scanf("%i", &yesNo);
         if (yesNo == 0 || yesNo == 1){
